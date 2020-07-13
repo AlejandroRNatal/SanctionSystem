@@ -1,0 +1,10 @@
+attrs==19.3.0
+click==7.1.2
+Flask==1.1.2
+hypothesis==5.19.2
+itsdangerous==1.1.0
+Jinja2==2.11.2
+MarkupSafe==1.1.1
+pkg-resources==0.0.0
+sortedcontainers==2.2.2
+Werkzeug==1.0.1
