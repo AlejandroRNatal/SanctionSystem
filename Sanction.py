@@ -77,14 +77,15 @@ def sanction_list_probability(name:str)->float:
     match_from_list = ''
     similarity = 0.0
 
-    for nam.lower() in sanctioned_names():
-        if str_similarity(name.lower(), nam) > similarity:
-            similarity = str_similarity(name.lower(), nam)
+    for nam in sanctioned_names():
+        if str_similarity(name, nam) > similarity:
+            similarity = str_similarity(name, nam)
 
     return similarity
 
 def is_sanctioned(name:str):
-    '''Verifies if provided name argument is inside the sanction list database or resembles any inside it.'''
+    '''Verifies if provided name argument is inside the sanction list database or resembles any inside it.
+        Returns a tuple with types Bool[sanction status],Float[probability]'''
     sanc_prob = sanction_list_probability(name)
     if sanc_prob >= SANCTIONED_THRESHOLD_PERCENTAGE:
         return True, sanc_prob
@@ -92,21 +93,21 @@ def is_sanctioned(name:str):
     return  False, sanc_prob
 
 
-def main():
+def debug():
     '''Main input loop for verifying if provided argument is sanctioned or not.'''
     input_ln =''
     # Bug here with exiting loop, fix later
-    while True or input_ln.lower().strip() != 'quit':
+    while True and input_ln.lower().strip() != 'quit':
 
         input_ln = input('\nEnter name to view if sanctioned(\'quit\' to exit shell):').strip()
 
-        if input_ln:
-            
-            if is_sanctioned(name=input_ln)[0]:
-                print(f'[!]HIT:{input_ln} with percentage {is_sanctioned(name=input_ln)[1]}\n')
+        if input_ln and input_ln !='quit':
+            cl_input = input_ln[:]
+            if is_sanctioned(name=cl_input.lower())[0]:
+                print(f'[!]HIT:{input_ln} with percentage {is_sanctioned(name=cl_input.lower())[1]}\n')
             else:
-                print(f'No Hit:{input_ln} with percentage {is_sanctioned(name=input_ln)[1]}\n')
+                print(f'No Hit:{input_ln} with percentage {is_sanctioned(name=cl_input.lower())[1]}\n')
     return
 
 if __name__ == "__main__":
-    main()
+    debug()
