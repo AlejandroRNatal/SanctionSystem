@@ -16,12 +16,8 @@ def distance(s_a:str ,s_b:str)->float:
     if len(s_a) == 0 or len(s_b)==0:
         return max(len(s_a), len(s_b))
 
-    # weight_a = [0] * (len(s_a) +1)
     weight_b = [0 for i in range(len(s_b) +1)] 
     weight_a = [ i for i in range(len(s_b)+1)]
-
-    # for i in range(len(weight_a)):
-    #     weight_a[i] = i
 
     for i in range(len(s_a)):
 
@@ -81,9 +77,9 @@ def sanction_list_probability(name:str)->float:
     match_from_list = ''
     similarity = 0.0
 
-    for nam in sanctioned_names():
-        if str_similarity(name, nam) > similarity:
-            similarity = str_similarity(name, nam)
+    for nam.lower() in sanctioned_names():
+        if str_similarity(name.lower(), nam) > similarity:
+            similarity = str_similarity(name.lower(), nam)
 
     return similarity
 
