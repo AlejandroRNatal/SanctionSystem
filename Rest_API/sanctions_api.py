@@ -38,7 +38,7 @@ def query_db(query, args=(), one= False):
 
     res = []
     for r in rv:
-        print(tuple(r))
+        # print(tuple(r))
         indv, org, country =tuple(r)
         res.append({'Individuals':indv,'Organizations':org,'Countries':country})
     # cur.close()
@@ -72,15 +72,17 @@ def home():
 
                 ks.append(k)
 
-        print(ks)
-        status, prob = Sanction.is_sanctioned(name,ks)
-
-        if status:
-            #check if it is sanctioned or not
-            message = f'[!]HIT: {name} with percentage {prob:02f}\n'
+        if name.strip() and ks:
+            # print(ks)
+            status, prob = Sanction.is_sanctioned(name,ks)
+            prob *=100
+            if status:
+                #check if it is sanctioned or not
+                message = f'[!]HIT: \'{name}\' with percentage {prob:02f}%\n'
+            else:
+                message = f'No Hit: \'{name}\' with percentage {prob:02f}%\n'
         else:
-            message = f'No Hit: {name} with percentage {prob:02f}\n'
-
+            message = 'Sorry, please provide a name!'
             #present the message that it is not sanctioned
     
     if request.method == 'GET':

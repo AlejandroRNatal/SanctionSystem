@@ -1,29 +1,31 @@
+
+<!DOCTYPE html>
 <html>
     
 <head>
     <div>
         Sanctions System
     </div>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/main.css')}}">
 </head>
 
 <body>
 
-    {% if message %}
-    <p>{{ message }}</p>
-    {% endif %}
+    
+        {% if message %}
+        <div id="sanction_result">
+            <p>{{ message }}</p>
+        </div>
+        {% endif %}
+    
 
 <form action="" method="post">
-    <p>
-        <label for="name">Name</label>
-        <input type="text" name="name">
-    </p>
-    <!-- <p>
-        <label for="password">Password</label>
-        <input type="password" name="password">
-    </p> -->
-    <p>
-        <input type="submit">
-    </p>
+   <div>
+        <label id="name_label" for="name">Name</label>
+        <input id="name_input" type="text" name="name">
+ 
+        <input id="submit_button" type="submit" name="submit">
+    </div>
 </form>
 
 
