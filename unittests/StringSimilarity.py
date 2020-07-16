@@ -14,7 +14,6 @@ class StringSimilarityMethods(TestCase):
         return
 
     def test_not_sanctioned(self, s):
-
         return
 
     def test_not_sanctioned_25_percent(self, s):

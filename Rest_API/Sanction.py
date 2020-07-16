@@ -1,5 +1,7 @@
 import os, sys, typing
 
+from typing import List
+
 SANCTIONED_THRESHOLD_PERCENTAGE = 0.75
 
 def distance(s_a:str ,s_b:str)->float:
@@ -13,7 +15,7 @@ def distance(s_a:str ,s_b:str)->float:
     if s_a == s_b:
         return 0.0
 
-    if len(s_a) == 0 or len(s_b)==0:
+    if len(s_a) == 0 or len(s_b) == 0:
         return max(len(s_a), len(s_b))
 
     weight_b = [0 for i in range(len(s_b) +1)] 
@@ -59,7 +61,7 @@ def str_similarity(s_a:str,s_b:str)->float:
     return 1.0 - distance_help(s_a,s_b)
 
 def sanctioned_names():
-    '''Opens a connection to internal Sactioned entities database.
+    '''Opens a connection to internal Sanctioned entities database.
         Returns a Generator object referencing a view of the database with read only priviliges.'''
     # try:
     with open('sanctioned_parties.txt','r') as sanctioned:
@@ -71,22 +73,24 @@ def sanctioned_names():
     #     print(e)
 
 
-def sanction_list_probability(name:str)->float:
+def sanction_list_probability(name:str, sanctioned_names:List[str]=[])->float:
     '''Determines if the provided name argument, or any variant, is found within the sanctioned database.
         Returns a similarity probability in the range of [0,1].'''
     match_from_list = ''
     similarity = 0.0
 
-    for nam in sanctioned_names():
+    for nam in sanctioned_names:
         if str_similarity(name, nam) > similarity:
             similarity = str_similarity(name, nam)
 
     return similarity
 
-def is_sanctioned(name:str):
+def is_sanctioned(name:str, sanctioned_names=sanctioned_names()):
     '''Verifies if provided name argument is inside the sanction list database or resembles any inside it.
         Returns a tuple with types Bool[sanction status],Float[probability]'''
-    sanc_prob = sanction_list_probability(name)
+    
+    sanc_prob = sanction_list_probability(name, sanctioned_names)
+    
     if sanc_prob >= SANCTIONED_THRESHOLD_PERCENTAGE:
         return True, sanc_prob
 
@@ -95,18 +99,18 @@ def is_sanctioned(name:str):
 
 def debug():
     '''Main input loop for verifying if provided argument is sanctioned or not.'''
+    
     input_ln =''
-    # Bug here with exiting loop, fix later
     while True and input_ln.lower().strip() != 'quit':
 
         input_ln = input('\nEnter name to view if sanctioned(\'quit\' to exit shell):').strip()
 
         if input_ln and input_ln !='quit':
-            cl_input = input_ln[:]
-            if is_sanctioned(name=cl_input.lower())[0]:
-                print(f'[!]HIT:{input_ln} with percentage {is_sanctioned(name=cl_input.lower())[1]}\n')
+            cl_input = input_ln[:].lower()# done to avoid modifying OG string
+            if is_sanctioned(name=cl_input)[0]:
+                print(f'[!]HIT:{input_ln} with percentage {is_sanctioned(name=cl_input)[1]}\n')
             else:
-                print(f'No Hit:{input_ln} with percentage {is_sanctioned(name=cl_input.lower())[1]}\n')
+                print(f'No Hit:{input_ln} with percentage {is_sanctioned(name=cl_input)[1]}\n')
     return
 
 if __name__ == "__main__":
