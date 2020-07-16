@@ -5,13 +5,12 @@ import csv
 def open_file(name='sample.csv'):
 
     try:
-        with open(name) as csv_file:
+        with open(name,encoding='utf-8') as csv_file:
             csv_reader = csv.DictReader(csv_file)
 
             for row in csv_reader:
-                # yield row
-                # print({key.strip():value.strip() for key, value in row.items()})
-                yield {key.strip():value.strip() for key, value in row.items()}
+                yield {key:value for key, value in row.items()}
+    
     except Exception as e:
         print(f"Could not open {name}...")
         print(f"{type(e)}:{e}")

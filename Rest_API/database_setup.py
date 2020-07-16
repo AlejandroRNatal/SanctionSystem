@@ -21,7 +21,6 @@ def sql_connection(db_name="sanctioned.db"):
 def sql_table(con):
     people, orgs, countries = 'Individuals','Organizations','Countries'
     curr = con.cursor()
-    # command = f'create table if not exists sanctioned({people} text, {orgs} text, {countries} text)'
     command = 'create table if not exists sanctioned('+people+' text,'+ orgs + ' text,' + countries+' text)'
     command.encode('utf-8')
     curr.execute(command)
@@ -50,8 +49,6 @@ def sql_insert(data:dict, con=sql_connection(),):
 
     person, country,org = data['Individuals'],data['Countries'], data['Organizations']
     cur = con.cursor()
-    # command = f'INSERT INTO sanctioned({person},{country},{org}) VALUES(?,?,?)'
-    # command.encode('utf-8')
     command = 'INSERT INTO sanctioned(Individuals,Countries,Organizations) VALUES(?,?,?)'
     command.encode('utf-8')
     cur.execute(command , (person,country,org))
@@ -90,10 +87,9 @@ def dummy_method():
         for row in open_file(name=db_path):
 
             print(row)
-            person, country,org = row['Individuals'].encode('utf-8'),row['Countries'].encode('utf-8'), row['Organizations'].encode('utf-8')
+            person, country,org = row['Individuals'],row['Countries'], row['Organizations']
             print(f"Individual:{person} | Country:{country} | Organization:{org}")
-            command = 'INSERT INTO sanctioned(Individuals, Countries, Organizations) VALUES(?,?,?)'
-            command.encode('utf-8')
+            command = 'INSERT INTO sanctioned(Individuals,  Organizations, Countries) VALUES(?,?,?)'
             cur.execute(command, (person,country,org))
             con.commit()
         
@@ -115,16 +111,13 @@ def populate_db(src:str="sanctioned.db",con=sql_connection()):
         for row in open_file(name=src):
 
             print(row)
-            person, country,org = row['Individuals'].encode('utf-8'),row['Countries'].encode('utf-8'), row['Organizations'].encode('utf-8')
+            person, country,org = row['Individuals'],row['Countries'], row['Organizations']
             command = 'INSERT INTO sanctioned(Individuals, Countries, Organizations) VALUES(?,?,?)'
-            command.encode('utf-8')
             cur.execute(command, (person,country,org))
             con.commit()
         
         
     except Exception as e:
-        # print(f"File {src} was not found:\n{e}")
-        print(type(e))
         print("[!] Error while populating database.")
         print(f"{type(e)}:{e}")
     

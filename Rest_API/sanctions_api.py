@@ -12,7 +12,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "sanctioned.db")
 
 
-# DATABASE = 'sanctioned.db'
 DATABASE = db_path
 
 def get_db():
@@ -36,11 +35,15 @@ def make_dicts(cursor, row):
 def query_db(query, args=(), one= False):
     cur = get_db().execute(query,args)
     rv = cur.fetchall()
+
+    res = []
+    for r in rv:
+        print(tuple(r))
+        indv, org, country =tuple(r)
+        res.append({'Individuals':indv,'Organizations':org,'Countries':country})
     # cur.close()
     # NEVER  CLOSES THE CURSOR, MIGHT BE MEMORY LEAK
-    print(rv)
-    return [dict(zip([column[0] for column in cur.description], str(row)))for row in rv]
-
+    return res
 def test_data():
     data = [{'name':'Kristopher Doe',
               'sanctioned':True},
@@ -115,12 +118,9 @@ def get_sanctioned_country(name):
 
 @app.route('/sanctioned/',methods=['GET'])
 def get_sanctioned():
-    # sanctioned=[]
 
-    # #check here if in the sanctioned list or not
     all = [di for di in query_db('select * from sanctioned')]
-    # print(all)
-    # print(type(all[0]))
+
     return jsonify(all)
 
 
