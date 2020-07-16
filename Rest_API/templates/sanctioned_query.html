@@ -1,0 +1,56 @@
+
+<!-- {% extends "base.html" %}
+
+{% block content %}
+
+    {%if message%}
+
+        <p>{{message}}</p>
+
+    {%endif%}
+
+    <h1>Check Sanctioned Database</h1>
+    <form action="" method="post" novalidate>
+
+        {{form.hidden_tag()}}
+        <p>
+            {{form.name.label}}<br>
+            {{form.name(size=32)}}
+        </p>
+
+        <p>
+            <input type="submit">
+        </p>
+
+    </form>
+
+{%endblock%} -->
+
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sanction System</title>
+</head>
+<body>
+ 
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+ 
+    <form action="" method="post">
+        <p>
+            <label for="name">Name</label>
+            <input type="text" name="name">
+        </p>
+        <!-- <p>
+            <label for="password">Password</label>
+            <input type="password" name="password">
+        </p> -->
+        <p>
+            <input type="submit">
+        </p>
+    </form>
+ 
+</body>
+</html>

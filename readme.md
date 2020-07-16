@@ -9,3 +9,9 @@
 # Running Unit Tests
 > cd unittests
 > python -m unittest
+
+# DockerHub Image link
+> https://hub.docker.com/repository/docker/ccgmagno/sherpa_module_2
+
+# SQL Viewer
+> https://inloop.github.io/sqlite-viewer/

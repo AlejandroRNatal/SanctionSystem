@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, make_response,g,json
+from flask import Flask,url_for ,request, jsonify, make_response,g,json, render_template,redirect
 import typing
 import Sanction
 import sanctioned_data_parser
@@ -56,13 +56,66 @@ def test_data():
 @app.route('/', methods=['GET','POST'])
 def home():
 
+    message =''
+
     if request.method == 'POST':
-        pass
 
+        name = request.form.get('name')
+
+        # Definitely a safety hazard, do not recommend this at all!
+        di_li = [di for di in get_sanctioned().get_json()]
+
+        ks = []
+        for di in di_li:
+
+            for k in di.values():
+
+                ks.append(k)
+
+        print(ks)
+        status, prob = Sanction.is_sanctioned(name,ks)
+
+        if status:
+            #check if it is sanctioned or not
+            message = f'[!]HIT: {name} with percentage {prob:02f}\n'
+        else:
+            message = f'No Hit: {name} with percentage {prob:02f}\n'
+
+            #present the message that it is not sanctioned
+    
     if request.method == 'GET':
+        # name = request.get_data(as_text=True)
+        # print(name)
         pass
 
-    return "<h1>Sanctions Archive</h1><p>This site is a prototype API for verifying sanctioned indivs.</p>"
+
+    return render_template('base.html', title='home',message=message)
+    # return "<h1>Sanctions Archive</h1><p>This site is a prototype API for verifying sanctioned indivs.</p>"
+
+@app.route('/check/',methods=['POST','GET'])
+def check_status():
+    message =''
+
+    if request.method == 'POST':
+
+        name = request.form.get('name')
+
+        
+        status, prob = Sanction.is_sanctioned(name,[key for key in get_sanctioned().keys()])
+
+        if status:
+            #check if it is sanctioned or not
+            message = f'[!]HIT:{name} with percentage {prob}\n'
+        else:
+            message = f'No Hit:{name} with percentage {prob}\n'
+
+            #present the message that it is not sanctioned
+    
+    if request.method == 'GET':
+        name = request.get_data(as_text=True)
+        print(name)
+
+    return render_template('sanctioned_query.html', message=message)
 
 @app.route('/sanctioned/individuals/',methods=['GET'])
 def get_sanctioned_individuals():
