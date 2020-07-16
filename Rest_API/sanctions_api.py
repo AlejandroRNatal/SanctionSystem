@@ -38,7 +38,7 @@ def query_db(query, args=(), one= False):
     rv = cur.fetchall()
     # cur.close()
     # NEVER  CLOSES THE CURSOR, MIGHT BE MEMORY LEAK
-    # return (rv[0] if rv else None) if one else rv
+    print(rv)
     return [dict(zip([column[0] for column in cur.description], str(row)))for row in rv]
 
 def test_data():
@@ -53,6 +53,24 @@ def test_data():
 def home():
     return "<h1>Sanctions Archive</h1><p>This site is a prototype API for verifying sanctioned indivs.</p>"
 
+@app.route('/sanctioned/individuals/',methods=['GET'])
+def get_sanctioned_individuals():
+    sanctioned=[{ "name": di['Individuals'],'Sanctioned' : True } for di in query_db("select * from sanctioned")]
+
+    return jsonify(sanctioned)
+
+@app.route('/sanctioned/organizations/',methods=['GET'])
+def get_sanctioned_organizations():
+    sanctioned=[{ "name": di['Organizations'],'Sanctioned' : True } for di in query_db("select * from sanctioned")]
+
+    return jsonify(sanctioned)
+
+@app.route('/sanctioned/countries/',methods=['GET'])
+def get_sanctioned_countries():
+    sanctioned=[{ "name": di['Countries'],'Sanctioned' : True } for di in query_db("select * from sanctioned")]
+
+    return jsonify(sanctioned)
+
 @app.route('/sanctioned/individuals/<string:name>',methods=['GET'])
 def get_sanctioned_individual(name):
     sanctioned=[]
@@ -61,8 +79,6 @@ def get_sanctioned_individual(name):
     #check here if in the sanctioned list or not
     for row in query_db('select * from sanctioned'):
         sanctioned.append(row[people])
-    
-    # probability = Sanction.sanction_list_probability(name, sanctioned)
 
     status, prob = Sanction.is_sanctioned(name, sanctioned)
     
@@ -84,7 +100,7 @@ def get_sanctioned_organization(name):
 
 
 @app.route('/sanctioned/countries/<string:name>',methods=['GET'])
-def get_sanctioned_countries(name):
+def get_sanctioned_country(name):
     sanctioned=[]
     people, countries, orgs =sanctioned_data_parser.parsed_data_params()
     
@@ -102,21 +118,9 @@ def get_sanctioned():
     # sanctioned=[]
 
     # #check here if in the sanctioned list or not
-    # for user in query_db('select * from sanctioned'):
-    #     sanctioned.append(user)
     all = [di for di in query_db('select * from sanctioned')]
     # print(all)
     # print(type(all[0]))
-
-    
-    # response = app.response_class(
-    #     response=all,
-    #     status=200,
-    #     mimetype='application/json'
-    # )
-
-    # return {"sanctioned":all[0],}
-    # return response
     return jsonify(all)
 
 

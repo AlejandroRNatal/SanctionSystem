@@ -80,7 +80,7 @@ def dummy_method():
     import os.path
 
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    db_path = os.path.join(BASE_DIR, "Rest_API/sample.csv")
+    db_path = os.path.join(BASE_DIR, "sample.csv")
     
     try:
         con = sql_connection()
@@ -91,6 +91,7 @@ def dummy_method():
 
             print(row)
             person, country,org = row['Individuals'].encode('utf-8'),row['Countries'].encode('utf-8'), row['Organizations'].encode('utf-8')
+            print(f"Individual:{person} | Country:{country} | Organization:{org}")
             command = 'INSERT INTO sanctioned(Individuals, Countries, Organizations) VALUES(?,?,?)'
             command.encode('utf-8')
             cur.execute(command, (person,country,org))
@@ -101,8 +102,6 @@ def dummy_method():
         
         
     except Exception as e:
-        # print(f"File {src} was not found:\n{e}")
-        print(type(e))
         print("[!] Error while populating database.")
         print(f"{type(e)}:{e}")
 
