@@ -44,6 +44,7 @@ def query_db(query, args=(), one= False):
     # cur.close()
     # NEVER  CLOSES THE CURSOR, MIGHT BE MEMORY LEAK
     return res
+
 def test_data():
     data = [{'name':'Kristopher Doe',
               'sanctioned':True},
@@ -52,8 +53,15 @@ def test_data():
             ]
     return data
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET','POST'])
 def home():
+
+    if request.method == 'POST':
+        pass
+
+    if request.method == 'GET':
+        pass
+
     return "<h1>Sanctions Archive</h1><p>This site is a prototype API for verifying sanctioned indivs.</p>"
 
 @app.route('/sanctioned/individuals/',methods=['GET'])

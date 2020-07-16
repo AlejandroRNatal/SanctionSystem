@@ -86,9 +86,9 @@ def dummy_method():
         sql_table(con)
         for row in open_file(name=db_path):
 
-            print(row)
+            # print(row)
             person, country,org = row['Individuals'],row['Countries'], row['Organizations']
-            print(f"Individual:{person} | Country:{country} | Organization:{org}")
+            # print(f"Individual:{person} | Country:{country} | Organization:{org}")
             command = 'INSERT INTO sanctioned(Individuals,  Organizations, Countries) VALUES(?,?,?)'
             cur.execute(command, (person,country,org))
             con.commit()
