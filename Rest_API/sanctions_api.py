@@ -38,7 +38,6 @@ def query_db(query, args=(), one= False):
 
     res = []
     for r in rv:
-        # print(tuple(r))
         indv, org, country =tuple(r)
         res.append({'Individuals':indv,'Organizations':org,'Countries':country})
     # cur.close()
@@ -92,7 +91,6 @@ def home():
 
 
     return render_template('base.html', title='home',message=message)
-    # return "<h1>Sanctions Archive</h1><p>This site is a prototype API for verifying sanctioned indivs.</p>"
 
 @app.route('/check/',methods=['POST','GET'])
 def check_status():
@@ -193,4 +191,5 @@ def page_not_found(e):
 
 
 if __name__ == "__main__":
+    # app.run(port=5001,threaded=True, debug=True)
     app.run(threaded=True, debug=True)

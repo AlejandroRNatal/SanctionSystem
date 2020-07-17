@@ -1,4 +1,5 @@
 import sys, os
+import os.path
 import sqlite3 as sql3
 
 import database_setup
@@ -6,9 +7,13 @@ from sanctioned_data_parser import open_file
 
 
 def sql_connection(db_name="sanctioned.db"):
+    
 
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(BASE_DIR, db_name)
+    print(db_path)
     try:
-        con = sql3.connect(db_name)
+        con = sql3.connect(db_path)
         print('Connected to db...')
         return con
     
@@ -47,7 +52,7 @@ def teardown_db(con=sql_connection()):
 
 def sql_insert(data:dict, con=sql_connection(),):
 
-    person, country,org = data['Individuals'],data['Countries'], data['Organizations']
+    person, country,org = data['Individuals'],data[' Countries'], data[' Organizations']
     cur = con.cursor()
     command = 'INSERT INTO sanctioned(Individuals,Countries,Organizations) VALUES(?,?,?)'
     command.encode('utf-8')
@@ -73,12 +78,11 @@ def sql_close(con=sql_connection()):
     con.close()
     return
 
-def dummy_method():
-    import os.path
+def build_database():
 
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     db_path = os.path.join(BASE_DIR, "sample.csv")
-    
+    print(db_path)
     try:
         con = sql_connection()
         cur = con.cursor()
@@ -87,7 +91,7 @@ def dummy_method():
         for row in open_file(name=db_path):
 
             # print(row)
-            person, country,org = row['Individuals'],row['Countries'], row['Organizations']
+            person, country,org = row['Individuals'],row[' Countries'], row[' Organizations']
             # print(f"Individual:{person} | Country:{country} | Organization:{org}")
             command = 'INSERT INTO sanctioned(Individuals,  Organizations, Countries) VALUES(?,?,?)'
             cur.execute(command, (person,country,org))
@@ -125,7 +129,5 @@ def populate_db(src:str="sanctioned.db",con=sql_connection()):
 
 
 if __name__ == "__main__":
-    # setup_db()
-    # for entry in sql_fetch():
-    #     print(entry)
-    dummy_method()
+
+    build_database()

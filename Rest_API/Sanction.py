@@ -97,21 +97,21 @@ def is_sanctioned(name:str, sanctioned_names=sanctioned_names()):
     return  False, sanc_prob
 
 
-def debug():
-    '''Main input loop for verifying if provided argument is sanctioned or not.'''
+# def debug():
+#     '''Main input loop for verifying if provided argument is sanctioned or not.'''
     
-    input_ln =''
-    while True and input_ln.lower().strip() != 'quit':
+#     input_ln =''
+#     while True and input_ln.lower().strip() != 'quit':
 
-        input_ln = input('\nEnter name to view if sanctioned(\'quit\' to exit shell):').strip()
+#         input_ln = input('\nEnter name to view if sanctioned(\'quit\' to exit shell):').strip()
 
-        if input_ln and input_ln !='quit':
-            cl_input = input_ln[:].lower()# done to avoid modifying OG string
-            if is_sanctioned(name=cl_input)[0]:
-                print(f'[!]HIT:{input_ln} with percentage {is_sanctioned(name=cl_input)[1]}\n')
-            else:
-                print(f'No Hit:{input_ln} with percentage {is_sanctioned(name=cl_input)[1]}\n')
-    return
+#         if input_ln and input_ln !='quit':
+#             cl_input = input_ln[:].lower()# done to avoid modifying OG string
+#             if is_sanctioned(name=cl_input)[0]:
+#                 print(f'[!]HIT:{input_ln} with percentage {is_sanctioned(name=cl_input)[1]}\n')
+#             else:
+#                 print(f'No Hit:{input_ln} with percentage {is_sanctioned(name=cl_input)[1]}\n')
+#     return
 
-if __name__ == "__main__":
-    debug()
+# if __name__ == "__main__":
+#     debug()
