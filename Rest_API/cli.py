@@ -34,9 +34,11 @@ def debug(db_name="sample.csv"):
         if input_ln and input_ln !='quit':
             cl_input = input_ln[:].lower()# done to avoid modifying OG string
             if is_sanctioned(name=cl_input, sanctioned_names=names)[0]:
-                print(f'[!]HIT:{input_ln} with percentage {is_sanctioned(sanctioned_names=names, name=cl_input)[1]}\n')
+                msg = f'[!]HIT:{input_ln} with percentage {is_sanctioned(sanctioned_names=names, name=cl_input)[1]}'
+                print(msg)
             else:
-                print(f'No Hit:{input_ln} with percentage {is_sanctioned(sanctioned_names=names, name=cl_input)[1]}\n')
+                msg = f'No Hit:{input_ln} with percentage {is_sanctioned(sanctioned_names=names, name=cl_input)[1]}'
+                print(msg)
     return
 
 if __name__ == "__main__":

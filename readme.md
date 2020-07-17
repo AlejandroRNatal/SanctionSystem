@@ -36,9 +36,9 @@
 ## Data stored in local Sanctioned database
 
 - Countries
-  -- USA
-  -- Iceland
-  -- Peru
+  - USA
+  - Iceland
+  - Peru
 - Individuals
   - Kristopher Doe
   - Jake Long
