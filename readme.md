@@ -21,7 +21,7 @@
 > sudo docker run --rm -d --network host --name ss sanctionsystem:0.1a
 
 > NOTE: THE FIX WAS FOUND HERE:
-> https://docs.docker.com/network/host/
+> https://docs.docker.com/network/network-tutorial-host/
 
 #THIS IS FAKE, DOCS LIED TO ME
 
