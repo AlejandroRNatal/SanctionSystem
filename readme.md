@@ -1,14 +1,40 @@
+# Running project Verbatim
+
+# Requirements
+- Python 3.6.x+
+- Flask
+- Hypothesis
+
+## Note: This assumes working directory is root of project!
+> In linux: ~/path/to/project/
+> In Windows: C:/Users/UserName/path/to/project/
+
+# To install requirements manually run:
+> cd SanctionSystem
+> pip install -r requirements.txt
+
+# Running Unit Tests
+> cd Rest_API
+> python TestStringSimilarity.py
+
+# Running CLI
+> cd Rest_API
+> python cli.py
+
+# Running REST API
+> cd Rest_API
+> python sanctions_api.py
+
+-----
+
+# Docker Image
 
 # In order to run this Docker app first you must pull the Python image
 > docker pull python
 
 # To build and run the Docker image:
-> docker build -t {name_of_our_python app}
+> docker build -t sanctionsystem
 > docker run -it --rm --name {running_app} {name_of_our_python app}
-
-# Running Unit Tests
-> cd unittests
-> python -m unittest
 
 
 # Build Docker Image
@@ -23,7 +49,7 @@
 > NOTE: THE FIX WAS FOUND HERE:
 > https://docs.docker.com/network/network-tutorial-host/
 
-#THIS IS FAKE, DOCS LIED TO ME
+# THIS IS FAKE, DOCS LIED TO ME
 
 > docker run --publish 5000:5000 --detach --name ss sanctionsystem:0.1a
 

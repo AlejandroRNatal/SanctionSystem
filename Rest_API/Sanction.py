@@ -6,17 +6,34 @@ SANCTIONED_THRESHOLD_PERCENTAGE = 0.75
 
 def distance(s_a:str ,s_b:str)->float:
     '''Calculates distance between both strings based on how far off one is from the other.'''
-    if not s_a:
+    if  s_a == None:
         raise ValueError("First argument provided was None!")
     
-    if not s_b:
+    if  s_b == None:
         raise ValueError("Second argument provided was None!")
     
     if s_a == s_b:
         return 0.0
 
-    if len(s_a) == 0 or len(s_b) == 0:
-        return max(len(s_a), len(s_b))
+    # if len(s_a) == 0 or len(s_b) == 0:
+    #     return max(len(s_a), len(s_b))
+
+    if len(s_a) == 0:
+
+        if len(s_b) == 0:
+            return len(s_b)
+        else:
+            return 1
+
+    if len(s_b) == 0:
+
+        if len(s_a) == 0:
+            return len(s_a)
+        else:
+            return 1
+    
+    
+    
 
     weight_b = [0 for i in range(len(s_b) +1)] 
     weight_a = [ i for i in range(len(s_b)+1)]
@@ -38,19 +55,26 @@ def distance(s_a:str ,s_b:str)->float:
 
 def distance_help(s_a:str, s_b:str)-> float:
     
-    if not s_a:
+    if s_a == None:
         raise ValueError("First argument provided was None!")
     
-    if not s_b:
+    if s_b == None:
         raise ValueError("Second argument provided was None!")
     
     if s_a == s_b:
+        if s_a == '' and s_b == '':
+            return 0.0
+        max_len = max(len(s_a), len(s_b))
+
+        if max_len == 0:
+            return 1.0
+
         return 0.0
 
     max_len = max(len(s_a), len(s_b))
 
     if max_len == 0:
-        return 0.0
+        return 1.0
 
     return distance(s_a,s_b) / max_len
 
@@ -76,6 +100,7 @@ def sanctioned_names():
 def sanction_list_probability(name:str, sanctioned_names:List[str]=[])->float:
     '''Determines if the provided name argument, or any variant, is found within the sanctioned database.
         Returns a similarity probability in the range of [0,1].'''
+    
     match_from_list = ''
     similarity = 0.0
 

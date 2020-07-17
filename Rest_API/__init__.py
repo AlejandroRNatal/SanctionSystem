@@ -1,4 +1,10 @@
 import os
+import sys, os.path
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+sys.path.insert(0,BASE_DIR)
 
 def create_app(test_config=None):
 
