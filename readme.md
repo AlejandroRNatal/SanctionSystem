@@ -33,20 +33,31 @@
 
 -----
 
+## Data stored in local Sanctioned database
+
+- Countries
+  -- USA
+  -- Iceland
+  -- Peru
+- Individuals
+  - Kristopher Doe
+  - Jake Long
+  - Jose Juan Rivera
+- Organizations
+  - Royal Arctic Line
+  - Not Disney
+  - Machu Pichu
+
+
+-----
+
 ## Docker Image
 
 ## In order to run this Docker app first you must pull the Python image
 > docker pull python
 
-## To build and run the Docker image:
-> docker build -t sanctionsystem
-
-> docker run -it --rm --name {running_app} {name_of_our_python app}
-
-
 ## Build Docker Image
 > docker build --tag sanctionsystem:0.1a .
-
 
 ## Running Docker Image
 
